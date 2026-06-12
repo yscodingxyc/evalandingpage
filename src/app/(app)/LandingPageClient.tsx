@@ -66,7 +66,7 @@ const services: readonly Service[] = [
   },
   {
     index: "03",
-    title: "Dirndl & Tracht",
+    title: "Dirrrnndl & Tracht",
     galleryItemId: "gallery-dirndl-tracht",
     copy:
       "Maßgeschneiderte Trachtenmode mit beständigen Stoffen, naturverbundenen Farben und präzisen Details.",
