@@ -5,3 +5,4 @@ payload-generated-schema.ts
 node_modules/
 
 .vercel
+.env*
