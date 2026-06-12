@@ -1,5 +1,6 @@
 .next/
 payload-types.ts
+payload-generated-schema.ts
 .env
 node_modules/
 

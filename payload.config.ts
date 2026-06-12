@@ -35,7 +35,7 @@ export default buildConfig({
     Gallery,
   ],
   db: hasDatabaseUrl
-    ? postgresAdapter({ pool: { connectionString: process.env.DATABASE_URL! }, push: true })
+    ? postgresAdapter({ pool: { connectionString: process.env.DATABASE_URL! }, migrationDir: path.resolve(dirname, "src/migrations") })
     : sqliteAdapter({ client: { url: `file:${path.resolve(dirname, "genoeva.db")}` } }),
   plugins: isVercel && process.env.BLOB_READ_WRITE_TOKEN
     ? [
