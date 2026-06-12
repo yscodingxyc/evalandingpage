@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build",
+    "build": "payload migrate && next build",
     "seed": "tsx seed.ts"
   },
   "dependencies": {
