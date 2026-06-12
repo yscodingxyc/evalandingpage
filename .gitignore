@@ -1,4 +1,6 @@
 .next/
 payload-types.ts
+.env
+node_modules/
 
 .vercel
