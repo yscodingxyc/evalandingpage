@@ -15,6 +15,7 @@ export type GalleryItem = {
 type NavItem = {
   id: "about" | "services" | "gallery";
   label: string;
+  href?: string;
 };
 
 type Service = {
@@ -34,7 +35,7 @@ type ProcessStep = {
 const navItems: readonly NavItem[] = [
   { id: "about", label: "Über mich" },
   { id: "services", label: "Leistungen" },
-  { id: "gallery", label: "Galerie" },
+  { id: "gallery", label: "Galerie", href: "/gallery" },
 ];
 
 const footerPages: readonly { path: string; label: string }[] = [
@@ -333,7 +334,7 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
               {navItems.map((item) => (
                 <Link
                   key={item.id}
-                  href={`#${item.id}`}
+                  href={item.href ?? `#${item.id}`}
                   className={activeSection === item.id ? "is-active" : undefined}
                   onClick={() => setMobileNavOpen(false)}
                 >
@@ -369,7 +370,7 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
           {navItems.map((item) => (
             <Link
               key={item.id}
-              href={`#${item.id}`}
+              href={item.href ?? `#${item.id}`}
               className={activeSection === item.id ? "is-active" : undefined}
               onClick={() => setMobileNavOpen(false)}
             >
@@ -407,7 +408,7 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
               <Link className="button button-primary" href="#services">
                 Leistungen ansehen
               </Link>
-              <Link className="button button-secondary" href="#gallery">
+              <Link className="button button-secondary" href="/gallery">
                 Galerie öffnen
               </Link>
             </div>
@@ -563,6 +564,12 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
                   </figcaption>
                 </figure>
               ))}
+            </div>
+
+            <div className="gallery-preview-cta">
+              <Link className="button button-primary" href="/gallery">
+                Alle Arbeiten ansehen
+              </Link>
             </div>
           </div>
         </section>

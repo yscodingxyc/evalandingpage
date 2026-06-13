@@ -16,8 +16,9 @@ const Gallery: CollectionConfig = {
       () => {
         try {
           revalidatePath("/");
+          revalidatePath("/gallery");
         } catch (err) {
-          console.error("Failed to revalidate homepage on change:", err);
+          console.error("Failed to revalidate on change:", err);
         }
       },
     ],
@@ -25,8 +26,9 @@ const Gallery: CollectionConfig = {
       () => {
         try {
           revalidatePath("/");
+          revalidatePath("/gallery");
         } catch (err) {
-          console.error("Failed to revalidate homepage on delete:", err);
+          console.error("Failed to revalidate on delete:", err);
         }
       },
     ],

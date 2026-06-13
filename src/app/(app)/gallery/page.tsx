@@ -1,11 +1,11 @@
 import { getPayload } from "payload";
 import configPromise from "@/payload-config";
-import LandingPageClient, { type GalleryItem } from "./LandingPageClient";
+import GalleryPageClient, { type GalleryItem } from "./GalleryPageClient";
 
-export const revalidate = 60; // ISR - revalidate page content every 60 seconds
+export const revalidate = 60;
 
-export default async function Page() {
-  let galleryPreviewItems: GalleryItem[] = [];
+export default async function GalleryPage() {
+  let galleryItems: GalleryItem[] = [];
 
   try {
     const payload = await getPayload({ config: configPromise });
@@ -13,12 +13,11 @@ export default async function Page() {
       collection: "gallery",
       sort: "order",
       depth: 1,
-      limit: 6,
+      limit: 100,
     });
 
     if (galleryData?.docs) {
-      galleryPreviewItems = galleryData.docs.map((doc: any) => {
-        // Handle image relation which could be ID string or nested object
+      galleryItems = galleryData.docs.map((doc: any) => {
         const imageUrl = doc.image && typeof doc.image === "object" ? doc.image.url : "";
         return {
           id: `gallery-${doc.slug ?? doc.id}`,
@@ -32,5 +31,5 @@ export default async function Page() {
     console.error("Failed to fetch gallery items from database:", error);
   }
 
-  return <LandingPageClient initialGalleryItems={galleryPreviewItems} />;
+  return <GalleryPageClient galleryItems={galleryItems} />;
 }
