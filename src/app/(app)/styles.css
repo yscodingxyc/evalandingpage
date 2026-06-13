@@ -55,6 +55,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -339,7 +340,7 @@ button {
 .section {
   position: relative;
   padding: clamp(4rem, 8vw, 7rem) 0;
-  scroll-margin-top: calc(var(--header-height) + 1rem);
+  scroll-margin-top: 0;
 }
 
 .section-heading {
@@ -612,7 +613,7 @@ button {
   min-height: 320px;
   margin: 0;
   overflow: hidden;
-  scroll-margin-top: calc(var(--header-height) + 1.1rem);
+  scroll-margin-top: 0;
   border-radius: 28px;
   background: var(--color-black);
   box-shadow: var(--shadow-soft);
