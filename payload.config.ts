@@ -27,7 +27,7 @@ export default buildConfig({
   collections: [
     {
       slug: "users",
-      auth: true,
+      auth: { tokenExpiration: 604800 },
       admin: { group: "Admin" },
       fields: [{ name: "name", type: "text", label: "Name" }],
     },
