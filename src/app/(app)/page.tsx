@@ -6,9 +6,11 @@ export const revalidate = 60; // ISR - revalidate page content every 60 seconds
 
 export default async function Page() {
   let galleryPreviewItems: GalleryItem[] = [];
+  let heroSlideUrls: string[] = [];
 
   try {
     const payload = await getPayload({ config: configPromise });
+
     const galleryData = await payload.find({
       collection: "gallery",
       sort: "order",
@@ -18,7 +20,6 @@ export default async function Page() {
 
     if (galleryData?.docs) {
       galleryPreviewItems = galleryData.docs.map((doc: any) => {
-        // Handle image relation which could be ID string or nested object
         const imageUrl = doc.image && typeof doc.image === "object" ? doc.image.url : "";
         return {
           id: `gallery-${doc.slug ?? doc.id}`,
@@ -28,9 +29,25 @@ export default async function Page() {
         };
       });
     }
+
+    const heroData = await payload.find({
+      collection: "hero-slides",
+      sort: "order",
+      depth: 1,
+      limit: 10,
+    });
+
+    if (heroData?.docs) {
+      heroSlideUrls = heroData.docs
+        .map((doc: any) => {
+          const imageUrl = doc.image && typeof doc.image === "object" ? doc.image.url : "";
+          return imageUrl || "";
+        })
+        .filter(Boolean);
+    }
   } catch (error) {
-    console.error("Failed to fetch gallery items from database:", error);
+    console.error("Failed to fetch data from database:", error);
   }
 
-  return <LandingPageClient initialGalleryItems={galleryPreviewItems} />;
+  return <LandingPageClient initialGalleryItems={galleryPreviewItems} initialHeroSlides={heroSlideUrls} />;
 }

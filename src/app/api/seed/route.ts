@@ -13,6 +13,12 @@ const GALLERY_ITEMS = [
   { file: "casual.jpg", title: "Casual", copy: "Lieblingsst\u00fccke f\u00fcr Alltag, Saison und Pers\u00f6nlichkeit", slug: "casual", category: "casual" as const, order: 6 },
 ];
 
+const HERO_ITEMS = [
+  { file: "hero-1.jpg", order: 1 },
+  { file: "hero-2.jpg", order: 2 },
+  { file: "hero-3.jpg", order: 3 },
+];
+
 export async function GET() {
   const results: string[] = [];
   const errors: string[] = [];
@@ -37,6 +43,13 @@ export async function GET() {
       await payload.delete({ collection: "gallery", id: doc.id });
     }
     results.push(`Deleted ${existingGallery.docs.length} existing gallery entries`);
+
+    // Delete existing hero slides entries
+    const existingHeroSlides = await payload.find({ collection: "hero-slides", limit: 100 });
+    for (const doc of existingHeroSlides.docs) {
+      await payload.delete({ collection: "hero-slides", id: doc.id });
+    }
+    results.push(`Deleted ${existingHeroSlides.docs.length} existing hero slides entries`);
 
     // Delete existing media
     const existingMedia = await payload.find({ collection: "media", limit: 100 });
@@ -84,6 +97,40 @@ export async function GET() {
       });
 
       results.push(`\u2713 ${item.title} (media: ${media.url ?? media.id})`);
+    }
+
+    // Seed hero slides
+    const heroDir = path.join(process.cwd(), "public", "assets", "images", "hero");
+
+    for (const item of HERO_ITEMS) {
+      const filePath = path.join(heroDir, item.file);
+      if (!fs.existsSync(filePath)) {
+        errors.push(`Hero file not found: ${item.file}`);
+        continue;
+      }
+
+      const fileBuffer = fs.readFileSync(filePath);
+      const media = await payload.create({
+        collection: "media",
+        data: { alt: `Hero Slide ${item.order}` },
+        file: {
+          data: fileBuffer,
+          mimetype: "image/jpeg",
+          name: item.file,
+          size: fileBuffer.length,
+        },
+      });
+
+      await payload.create({
+        collection: "hero-slides",
+        data: {
+          image: media.id,
+          alt: `Hero Slide ${item.order}`,
+          order: item.order,
+        },
+      });
+
+      results.push(`\u2713 Hero Slide ${item.order} (media: ${media.url ?? media.id})`);
     }
   } catch (err: any) {
     errors.push(`Fatal: ${err.message}`);

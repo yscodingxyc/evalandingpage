@@ -44,12 +44,6 @@ const footerPages: readonly { path: string; label: string }[] = [
   { path: "/impressum", label: "Impressum" },
 ];
 
-const heroSlides = [
-  "/assets/images/hero/hero-1.jpg",
-  "/assets/images/hero/hero-2.jpg",
-  "/assets/images/hero/hero-3.jpg",
-] as const;
-
 const services: readonly Service[] = [
   {
     index: "01",
@@ -185,9 +179,16 @@ const getHeroSlideStyle = (slide: string): CSSProperties =>
 
 interface LandingPageClientProps {
   initialGalleryItems: GalleryItem[];
+  initialHeroSlides: string[];
 }
 
-export default function LandingPageClient({ initialGalleryItems }: LandingPageClientProps) {
+const HERO_SLIDES_FALLBACK = [
+  "/assets/images/hero/hero-1.jpg",
+  "/assets/images/hero/hero-2.jpg",
+  "/assets/images/hero/hero-3.jpg",
+];
+
+export default function LandingPageClient({ initialGalleryItems, initialHeroSlides }: LandingPageClientProps) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [activeGalleryItem, setActiveGalleryItem] = useState<GalleryItem | null>(null);
@@ -195,6 +196,8 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
   const [isScrolled, setIsScrolled] = useState(false);
 
   const galleryItems = initialGalleryItems.length > 0 ? initialGalleryItems : galleryItemsFallback;
+
+  const heroSlides = initialHeroSlides.length > 0 ? initialHeroSlides : HERO_SLIDES_FALLBACK;
 
   const activeGalleryIndex = activeGalleryItem
     ? galleryItems.findIndex((item) => item.id === activeGalleryItem.id)
@@ -224,7 +227,7 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
     return () => {
       window.clearInterval(timer);
     };
-  }, []);
+  }, [heroSlides]);
 
   useEffect(() => {
     const handleScroll = () => {

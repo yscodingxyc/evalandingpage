@@ -17,52 +17,99 @@ const EXISTING_IMAGES = [
   { file: "casual.jpg", title: "Casual", copy: "Lieblingsstücke für Alltag, Saison und Persönlichkeit", slug: "casual", category: "casual" as const, order: 6 },
 ];
 
+const HERO_IMAGES = [
+  { file: "hero-1.jpg", order: 1 },
+  { file: "hero-2.jpg", order: 2 },
+  { file: "hero-3.jpg", order: 3 },
+];
+
 const seed = async () => {
   const payload = await getPayload({ config });
 
   const existingDocs = await payload.find({ collection: "gallery", limit: 1 });
   if (existingDocs.docs.length > 0) {
-    console.log("Galerie-Daten existieren bereits – Seed übersprungen.");
-    process.exit(0);
-  }
+    console.log("Galerie-Daten existieren bereits – überspringe Gallery-Seed.");
+  } else {
+    const imagesDir = path.resolve(dirname, "public", "assets", "images", "gallery");
 
-  const imagesDir = path.resolve(dirname, "public", "assets", "images", "gallery");
+    for (const item of EXISTING_IMAGES) {
+      const filePath = path.join(imagesDir, item.file);
+      if (!fs.existsSync(filePath)) {
+        console.warn(`Datei nicht gefunden: ${item.file} – überspringe`);
+        continue;
+      }
 
-  for (const item of EXISTING_IMAGES) {
-    const filePath = path.join(imagesDir, item.file);
-    if (!fs.existsSync(filePath)) {
-      console.warn(`Datei nicht gefunden: ${item.file} – überspringe`);
-      continue;
+      const fileBuffer = fs.readFileSync(filePath);
+      const media = await payload.create({
+        collection: "media",
+        data: { alt: item.title },
+        file: {
+          data: fileBuffer,
+          mimetype: "image/jpeg",
+          name: item.file,
+          size: fileBuffer.length,
+        },
+      });
+
+      await payload.create({
+        collection: "gallery",
+        data: {
+          title: item.title,
+          copy: item.copy,
+          slug: item.slug,
+          category: item.category,
+          order: item.order,
+          image: media.id,
+        },
+      });
+
+      console.log(`  ✓ ${item.title}`);
     }
 
-    const fileBuffer = fs.readFileSync(filePath);
-    const media = await payload.create({
-      collection: "media",
-      data: { alt: item.title },
-      file: {
-        data: fileBuffer,
-        mimetype: "image/jpeg",
-        name: item.file,
-        size: fileBuffer.length,
-      },
-    });
-
-    await payload.create({
-      collection: "gallery",
-      data: {
-        title: item.title,
-        copy: item.copy,
-        slug: item.slug,
-        category: item.category,
-        order: item.order,
-        image: media.id,
-      },
-    });
-
-    console.log(`  ✓ ${item.title}`);
+    console.log("Galerie-Seed abgeschlossen!\n");
   }
 
-  console.log("\nSeed abgeschlossen! Alle Galerie-Daten wurden importiert.\n");
+  const existingHero = await payload.find({ collection: "hero-slides", limit: 1 });
+  if (existingHero.docs.length > 0) {
+    console.log("Hero-Slides existieren bereits – überspringe Hero-Seed.");
+  } else {
+    const heroDir = path.resolve(dirname, "public", "assets", "images", "hero");
+
+    for (const item of HERO_IMAGES) {
+      const filePath = path.join(heroDir, item.file);
+      if (!fs.existsSync(filePath)) {
+        console.warn(`Datei nicht gefunden: ${item.file} – überspringe`);
+        continue;
+      }
+
+      const fileBuffer = fs.readFileSync(filePath);
+      const media = await payload.create({
+        collection: "media",
+        data: { alt: `Hero Slide ${item.order}` },
+        file: {
+          data: fileBuffer,
+          mimetype: "image/jpeg",
+          name: item.file,
+          size: fileBuffer.length,
+        },
+      });
+
+      await payload.create({
+        collection: "hero-slides",
+        data: {
+          image: media.id,
+          alt: `Hero Slide ${item.order}`,
+          order: item.order,
+        },
+      });
+
+      console.log(`  ✓ Hero Slide ${item.order}`);
+    }
+
+    console.log("Hero-Slides-Seed abgeschlossen!\n");
+  }
+
+  console.log("Seed abgeschlossen!\n");
   process.exit(0);
 };
 

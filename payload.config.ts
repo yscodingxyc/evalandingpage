@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 
 import Media from "./src/collections/Media";
 import Gallery from "./src/collections/Gallery";
+import HeroSlides from "./src/collections/HeroSlides";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -33,6 +34,7 @@ export default buildConfig({
     },
     Media,
     Gallery,
+    HeroSlides,
   ],
   db: hasDatabaseUrl
     ? postgresAdapter({ pool: { connectionString: process.env.DATABASE_URL! }, migrationDir: path.resolve(dirname, "src/migrations") })
