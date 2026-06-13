@@ -53,13 +53,13 @@ export default buildConfig({
   cors: [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://evalandingpage.vercel.app",
     process.env.FRONTEND_URL,
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
   ].filter((v): v is string => typeof v === "string"),
   csrf: [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://evalandingpage.vercel.app",
     process.env.FRONTEND_URL,
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
   ].filter((v): v is string => typeof v === "string"),
 });
