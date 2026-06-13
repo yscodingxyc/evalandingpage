@@ -10,6 +10,9 @@ const HeroSlides: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => Boolean(user),
+    delete: ({ req: { user } }) => Boolean(user),
   },
   hooks: {
     afterChange: [
@@ -42,11 +45,13 @@ const HeroSlides: CollectionConfig = {
     {
       name: "alt",
       type: "text",
+      required: true,
       label: "Beschreibung (Alt-Text)",
     },
     {
       name: "order",
       type: "number",
+      required: true,
       label: "Reihenfolge",
       admin: {
         placeholder: "niedrige Zahl = zuerst angezeigt",
