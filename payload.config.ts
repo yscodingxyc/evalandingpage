@@ -54,12 +54,12 @@ export default buildConfig({
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     process.env.FRONTEND_URL,
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "",
-  ].filter(Boolean),
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  ].filter((v): v is string => typeof v === "string"),
   csrf: [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     process.env.FRONTEND_URL,
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "",
-  ].filter(Boolean),
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined,
+  ].filter((v): v is string => typeof v === "string"),
 });
