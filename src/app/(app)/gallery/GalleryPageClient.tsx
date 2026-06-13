@@ -20,6 +20,22 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const activeIndex = activeItem
+    ? galleryItems.findIndex((item) => item.id === activeItem.id)
+    : -1;
+
+  const handlePrev = () => {
+    if (activeIndex < 0) return;
+    const prevIndex = (activeIndex - 1 + galleryItems.length) % galleryItems.length;
+    setActiveItem(galleryItems[prevIndex]);
+  };
+
+  const handleNext = () => {
+    if (activeIndex < 0) return;
+    const nextIndex = (activeIndex + 1) % galleryItems.length;
+    setActiveItem(galleryItems[nextIndex]);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 12);
@@ -54,6 +70,12 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setActiveItem(null);
+      }
+      if (event.key === "ArrowLeft") {
+        handlePrev();
+      }
+      if (event.key === "ArrowRight") {
+        handleNext();
       }
     };
 
@@ -145,6 +167,27 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
               <span></span>
               <span></span>
             </button>
+
+            {galleryItems.length > 1 ? (
+              <>
+                <button
+                  type="button"
+                  className="gallery-lightbox-prev"
+                  aria-label="Vorheriges Bild"
+                  onClick={handlePrev}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                </button>
+                <button
+                  type="button"
+                  className="gallery-lightbox-next"
+                  aria-label="Nächstes Bild"
+                  onClick={handleNext}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </button>
+              </>
+            ) : null}
 
             <img
               src={activeItem.image}

@@ -196,6 +196,22 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
 
   const galleryItems = initialGalleryItems.length > 0 ? initialGalleryItems : galleryItemsFallback;
 
+  const activeGalleryIndex = activeGalleryItem
+    ? galleryItems.findIndex((item) => item.id === activeGalleryItem.id)
+    : -1;
+
+  const handleGalleryPrev = () => {
+    if (activeGalleryIndex < 0) return;
+    const prevIndex = (activeGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
+    setActiveGalleryItem(galleryItems[prevIndex]);
+  };
+
+  const handleGalleryNext = () => {
+    if (activeGalleryIndex < 0) return;
+    const nextIndex = (activeGalleryIndex + 1) % galleryItems.length;
+    setActiveGalleryItem(galleryItems[nextIndex]);
+  };
+
   useEffect(() => {
     if (heroSlides.length < 2) {
       return undefined;
@@ -288,6 +304,12 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setActiveGalleryItem(null);
+      }
+      if (event.key === "ArrowLeft") {
+        handleGalleryPrev();
+      }
+      if (event.key === "ArrowRight") {
+        handleGalleryNext();
       }
     };
 
@@ -651,6 +673,27 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
               <span></span>
               <span></span>
             </button>
+
+            {galleryItems.length > 1 ? (
+              <>
+                <button
+                  type="button"
+                  className="gallery-lightbox-prev"
+                  aria-label="Vorheriges Bild"
+                  onClick={handleGalleryPrev}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                </button>
+                <button
+                  type="button"
+                  className="gallery-lightbox-next"
+                  aria-label="Nächstes Bild"
+                  onClick={handleGalleryNext}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </button>
+              </>
+            ) : null}
 
             <img
               src={activeGalleryItem.image}
