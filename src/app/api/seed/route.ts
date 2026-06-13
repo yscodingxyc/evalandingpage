@@ -89,6 +89,21 @@ export async function GET() {
     errors.push(`Fatal: ${err.message}`);
   }
 
+  // Verify blobs after upload
+  const hasToken = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  results.push(`BLOB_READ_WRITE_TOKEN set: ${hasToken}`);
+  try {
+    const { blobs } = await list();
+    if (blobs.length > 0) {
+      results.push(`Blobs in store after seed: ${blobs.length}`);
+      for (const b of blobs) results.push(`  ${b.pathname}: ${b.url}`);
+    } else {
+      results.push("No blobs found in store after seed!");
+    }
+  } catch (e: any) {
+    errors.push(`Blob list after seed failed: ${e.message}`);
+  }
+
   const html = `<!DOCTYPE html>
 <html><head><title>Seed Results</title><style>body{font-family:monospace;padding:2rem;background:#111;color:#eee}li{margin:0.5rem 0}.ok{color:#4f4}.err{color:#f44}</style></head><body>
 <h1>Seed Results</h1><ul>${results.map(r => `<li class="ok">${r}</li>`).join("")}</ul>
