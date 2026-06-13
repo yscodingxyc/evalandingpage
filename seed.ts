@@ -26,7 +26,7 @@ const seed = async () => {
     process.exit(0);
   }
 
-  const imagesDir = path.resolve(dirname, "..", "public", "assets", "images", "gallery");
+  const imagesDir = path.resolve(dirname, "public", "assets", "images", "gallery");
 
   for (const item of EXISTING_IMAGES) {
     const filePath = path.join(imagesDir, item.file);
