@@ -1,5 +1,6 @@
 import { getPayload } from "payload";
 import configPromise from "@/payload-config";
+import { del, list } from "@vercel/blob";
 import fs from "fs";
 import path from "path";
 
@@ -19,7 +20,18 @@ export async function GET() {
   try {
     const payload = await getPayload({ config: configPromise });
 
-    // Delete existing gallery entries first
+    // Clean up existing blobs from Vercel Blob store
+    try {
+      const { blobs } = await list();
+      for (const blob of blobs) {
+        await del(blob.url);
+      }
+      results.push(`Deleted ${blobs.length} existing blobs from store`);
+    } catch (e: any) {
+      results.push(`Blob cleanup skipped (${e.message})`);
+    }
+
+    // Delete existing gallery entries
     const existingGallery = await payload.find({ collection: "gallery", limit: 100 });
     for (const doc of existingGallery.docs) {
       await payload.delete({ collection: "gallery", id: doc.id });
