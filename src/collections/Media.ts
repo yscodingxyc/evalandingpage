@@ -14,6 +14,15 @@ const Media: CollectionConfig = {
   },
   fields: [
     {
+      name: "replaceFile",
+      type: "ui",
+      admin: {
+        components: {
+          Field: "@/components/admin/ReplaceMediaFile#ReplaceMediaFile",
+        },
+      },
+    },
+    {
       name: "alt",
       type: "text",
       label: "Alternativtext",
