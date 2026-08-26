@@ -258,7 +258,7 @@ button {
   z-index: 1;
   padding: clamp(4rem, 9vw, 7rem) 0;
   color: #fff;
-  transform: translateX(clamp(-8rem, -12vw, -2rem));
+  transform: translateX(clamp(0rem, calc(-6vw + 3.2rem), -2rem));
 }
 
 .hero-kicker,
