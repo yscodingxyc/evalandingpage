@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback, useRef } from 'react'
 import { useDocumentInfo } from '@payloadcms/ui'
+import { compressImageFile } from '@/lib/compressImageClient'
 
 export const ReplaceMediaFile: React.FC = () => {
   const { id } = useDocumentInfo()
@@ -16,7 +17,7 @@ export const ReplaceMediaFile: React.FC = () => {
       return
     }
 
-    const file = fileInput.files[0]
+    const file = await compressImageFile(fileInput.files[0])
     const formData = new FormData()
     formData.append('id', String(id))
     formData.append('file', file)
