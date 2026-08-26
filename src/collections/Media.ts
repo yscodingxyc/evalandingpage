@@ -5,14 +5,14 @@ const Media: CollectionConfig = {
   slug: "media",
   upload: {
     adminThumbnail: "thumbnail",
-    admin: {
-      components: {
-        controls: ["@/components/admin/CompressibleUploadControls#CompressibleUploadControls"],
-      },
-    },
   },
   admin: {
     group: "Inhalte",
+    components: {
+      edit: {
+        Upload: "@/components/admin/CompressibleUpload#CompressibleUpload",
+      },
+    },
   },
   access: {
     read: () => true,
