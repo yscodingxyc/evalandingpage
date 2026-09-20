@@ -1,5 +1,5 @@
 {
   "framework": "nextjs",
-  "buildCommand": "payload generate:importmap && payload migrate --force-accept-warning && next build",
+  "buildCommand": "payload generate:importmap && node scripts/migrate-build.mjs && next build",
   "installCommand": "npm install"
 }

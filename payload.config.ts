@@ -37,7 +37,18 @@ export default buildConfig({
     HeroSlides,
   ],
   db: hasDatabaseUrl
-    ? postgresAdapter({ pool: { connectionString: process.env.DATABASE_URL! }, migrationDir: path.resolve(dirname, "src/migrations") })
+    ? postgresAdapter({
+        pool: {
+          connectionString: process.env.DATABASE_URL!,
+          connectionTimeoutMillis: 20_000,
+          ...(process.env.PAYLOAD_MIGRATING === "true" ? {
+            statement_timeout: 60_000,
+            query_timeout: 65_000,
+            lock_timeout: 15_000,
+          } : {}),
+        },
+        migrationDir: path.resolve(dirname, "src/migrations"),
+      })
     : sqliteAdapter({ client: { url: `file:${path.resolve(dirname, "genoeva.db")}` } }),
   plugins: isVercel && process.env.BLOB_READ_WRITE_TOKEN
     ? [
