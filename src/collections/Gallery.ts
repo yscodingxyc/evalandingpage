@@ -60,7 +60,7 @@ const Gallery: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       required: true,
-      label: "Bild",
+      label: "Vorschaubild",
       admin: {
         description: "Vorschaubild und erstes Bild der Galerie.",
       },
@@ -70,9 +70,10 @@ const Gallery: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       hasMany: true,
-      label: "Weitere Bilder",
+      label: "Weitere Bilder (unbegrenzt)",
       admin: {
-        description: "Hier weitere Fotos hinzufügen. Sie erscheinen beim Öffnen dieser Galerie nach dem Vorschaubild.",
+        isSortable: true,
+        description: "Beliebig viele Fotos: Über „Upload“ / „Create New“ neue Bilder hochladen oder über „Choose from existing“ vorhandene auswählen. Auch nach dem ersten zusätzlichen Bild kannst du hier weitere hinzufügen. Reihenfolge per Ziehen ändern und anschließend die Galerie speichern.",
       },
     },
     {
