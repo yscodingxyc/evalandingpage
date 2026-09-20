@@ -8,6 +8,7 @@ export type GalleryItem = {
   title: string;
   copy: string;
   image: string;
+  additionalImages?: string[];
   className?: string;
   large?: boolean;
 };
@@ -20,20 +21,19 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const activeIndex = activeItem
-    ? galleryItems.findIndex((item) => item.id === activeItem.id)
-    : -1;
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const activeImages = activeItem
+    ? [activeItem.image, ...(activeItem.additionalImages ?? [])].filter(Boolean)
+    : [];
 
   const handlePrev = () => {
-    if (activeIndex < 0) return;
-    const prevIndex = (activeIndex - 1 + galleryItems.length) % galleryItems.length;
-    setActiveItem(galleryItems[prevIndex]);
+    if (activeImages.length < 2) return;
+    setActiveImageIndex((index) => (index - 1 + activeImages.length) % activeImages.length);
   };
 
   const handleNext = () => {
-    if (activeIndex < 0) return;
-    const nextIndex = (activeIndex + 1) % galleryItems.length;
-    setActiveItem(galleryItems[nextIndex]);
+    if (activeImages.length < 2) return;
+    setActiveImageIndex((index) => (index + 1) % activeImages.length);
   };
 
   useEffect(() => {
@@ -127,12 +127,13 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
                       type="button"
                       className="gallery-card-hitbox"
                       aria-label={`${item.title} vergrößern`}
-                      onClick={() => setActiveItem(item)}
+                      onClick={() => { setActiveImageIndex(0); setActiveItem(item); }}
                     />
                     <img src={item.image} alt={item.title} loading="lazy" />
                     <figcaption>
                       <strong>{item.title}</strong>
                       <span>{item.copy}</span>
+                      {Boolean(item.additionalImages?.length) && <span>{1 + (item.additionalImages?.length ?? 0)} Bilder ansehen</span>}
                     </figcaption>
                   </figure>
                 ))}
@@ -168,7 +169,7 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
               <span></span>
             </button>
 
-            {galleryItems.length > 1 ? (
+            {activeImages.length > 1 ? (
               <>
                 <button
                   type="button"
@@ -190,7 +191,7 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
             ) : null}
 
             <img
-              src={activeItem.image}
+              src={activeImages[activeImageIndex]}
               alt={activeItem.title}
               loading="eager"
             />
@@ -198,6 +199,7 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
             <div className="gallery-lightbox-caption">
               <strong>{activeItem.title}</strong>
               <span>{activeItem.copy}</span>
+              {activeImages.length > 1 && <span aria-live="polite">Bild {activeImageIndex + 1} von {activeImages.length}</span>}
             </div>
           </div>
         </div>

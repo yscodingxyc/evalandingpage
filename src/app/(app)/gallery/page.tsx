@@ -24,6 +24,10 @@ export default async function GalleryPage() {
           title: doc.title || "",
           copy: doc.copy || "",
           image: imageUrl || "",
+          additionalImages: (doc.additionalImages ?? [])
+            .map((media: { url?: string } | string | number | null) =>
+              media && typeof media === "object" ? media.url : undefined)
+            .filter((url: unknown): url is string => typeof url === "string" && url.length > 0),
         };
       });
     }

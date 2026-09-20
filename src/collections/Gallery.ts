@@ -61,6 +61,19 @@ const Gallery: CollectionConfig = {
       relationTo: "media",
       required: true,
       label: "Bild",
+      admin: {
+        description: "Vorschaubild und erstes Bild der Galerie.",
+      },
+    },
+    {
+      name: "additionalImages",
+      type: "upload",
+      relationTo: "media",
+      hasMany: true,
+      label: "Weitere Bilder",
+      admin: {
+        description: "Hier weitere Fotos hinzufügen. Sie erscheinen beim Öffnen dieser Galerie nach dem Vorschaubild.",
+      },
     },
     {
       name: "order",

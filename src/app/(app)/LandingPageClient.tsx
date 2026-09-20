@@ -8,6 +8,7 @@ export type GalleryItem = {
   title: string;
   copy: string;
   image: string;
+  additionalImages?: string[];
   className?: string;
   large?: boolean;
 };
@@ -199,20 +200,19 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
 
   const heroSlides = initialHeroSlides.length > 0 ? initialHeroSlides : HERO_SLIDES_FALLBACK;
 
-  const activeGalleryIndex = activeGalleryItem
-    ? galleryItems.findIndex((item) => item.id === activeGalleryItem.id)
-    : -1;
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const activeImages = activeGalleryItem
+    ? [activeGalleryItem.image, ...(activeGalleryItem.additionalImages ?? [])].filter(Boolean)
+    : [];
 
   const handleGalleryPrev = () => {
-    if (activeGalleryIndex < 0) return;
-    const prevIndex = (activeGalleryIndex - 1 + galleryItems.length) % galleryItems.length;
-    setActiveGalleryItem(galleryItems[prevIndex]);
+    if (activeImages.length < 2) return;
+    setActiveImageIndex((index) => (index - 1 + activeImages.length) % activeImages.length);
   };
 
   const handleGalleryNext = () => {
-    if (activeGalleryIndex < 0) return;
-    const nextIndex = (activeGalleryIndex + 1) % galleryItems.length;
-    setActiveGalleryItem(galleryItems[nextIndex]);
+    if (activeImages.length < 2) return;
+    setActiveImageIndex((index) => (index + 1) % activeImages.length);
   };
 
   useEffect(() => {
@@ -580,12 +580,13 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
                     type="button"
                     className="gallery-card-hitbox"
                     aria-label={`${item.title} vergrößern`}
-                    onClick={() => setActiveGalleryItem(item)}
+                    onClick={() => { setActiveImageIndex(0); setActiveGalleryItem(item); }}
                   />
                   <img src={item.image} alt={item.title} loading="lazy" />
                   <figcaption>
                     <strong>{item.title}</strong>
                     <span>{item.copy}</span>
+                      {Boolean(item.additionalImages?.length) && <span>{1 + (item.additionalImages?.length ?? 0)} Bilder ansehen</span>}
                   </figcaption>
                 </figure>
               ))}
@@ -677,7 +678,7 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
               <span></span>
             </button>
 
-            {galleryItems.length > 1 ? (
+            {activeImages.length > 1 ? (
               <>
                 <button
                   type="button"
@@ -699,7 +700,7 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
             ) : null}
 
             <img
-              src={activeGalleryItem.image}
+              src={activeImages[activeImageIndex]}
               alt={activeGalleryItem.title}
               loading="eager"
             />
@@ -707,6 +708,7 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
             <div className="gallery-lightbox-caption">
               <strong>{activeGalleryItem.title}</strong>
               <span>{activeGalleryItem.copy}</span>
+              {activeImages.length > 1 && <span aria-live="polite">Bild {activeImageIndex + 1} von {activeImages.length}</span>}
             </div>
           </div>
         </div>
