@@ -50,14 +50,15 @@ export default buildConfig({
         migrationDir: path.resolve(dirname, "src/migrations"),
       })
     : sqliteAdapter({ client: { url: `file:${path.resolve(dirname, "genoeva.db")}` } }),
-  plugins: isVercel && process.env.BLOB_READ_WRITE_TOKEN
-    ? [
-        vercelBlobStorage({
-          collections: { media: true },
-          token: process.env.BLOB_READ_WRITE_TOKEN,
-        }),
-      ]
-    : [],
+  // Register the admin component even when storage is disabled during generation.
+  // Build-time and runtime import maps must contain the same provider.
+  plugins: [
+    vercelBlobStorage({
+      enabled: isVercel && Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: { media: true },
+      token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
+    }),
+  ],
   typescript: {
     outputFile: path.resolve(dirname, "src", "payload-types.ts"),
   },
