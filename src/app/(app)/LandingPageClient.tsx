@@ -479,7 +479,7 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
 
             <div className="process-intro-card">
               <p>
-                Ein maßgeschneidertes Kleidungsstück entsteht in einem kreativen Dialog und
+                Ein maßgeschneidertes Kleidungsstück entsteht in einem kreativen dialog und
                 in feinster Handarbeit. Vom ersten Gespräch bis zur finalen Übergabe begleite
                 ich meine Kundinnen Schritt für Schritt auf dem Weg zu ihrem persönlichen Unikat.
               </p>
