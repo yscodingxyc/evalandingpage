@@ -17,6 +17,10 @@ type LegalPage = {
   sections: Array<{
     heading: string;
     paragraphs: string[];
+    subsections?: Array<{
+      heading: string;
+      paragraphs: string[];
+    }>;
   }>;
 };
 
@@ -31,6 +35,19 @@ const footerPages: readonly { path: LegalPath; label: string }[] = [
   { path: "/datenschutz", label: "Datenschutz" },
   { path: "/impressum", label: "Impressum" },
 ];
+
+function renderLegalParagraph(paragraph: string) {
+  return paragraph.split(/(https?:\/\/[^\s]+)/g).map((part, index) => {
+    if (!/^https?:\/\/.+/.test(part)) return part;
+    const url = part.replace(/[.,;:!?]+$/, "");
+    return (
+      <span key={index}>
+        <a href={url}>{url}</a>
+        {part.slice(url.length)}
+      </span>
+    );
+  });
+}
 
 interface LegalPageClientProps {
   legalPage: LegalPage;
@@ -164,24 +181,19 @@ export default function LegalPageClient({ legalPage }: LegalPageClientProps) {
           <div className="container legal-hero-inner">
             <p className="section-kicker">Rechtliches</p>
             <h1>{legalPage.title}</h1>
-            <p className="legal-intro">{legalPage.intro}</p>
+            {legalPage.intro && <p className="legal-intro">{legalPage.intro}</p>}
           </div>
         </section>
 
         <section className="legal-content">
           <div className="container legal-content-inner">
-            <div className="legal-note">
-              Bitte prüfen Sie diese Inhalte vor dem Livegang rechtlich und
-              ersetzen Sie Platzhaltertexte durch die finalen Angaben.
-            </div>
-
             {isCompactLegalPage ? (
               <article className="legal-card">
                 {legalPage.sections.map((section) => (
                   <section className="legal-section-block" key={section.heading}>
                     <h2>{section.heading}</h2>
                     {section.paragraphs.map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
+                      <p key={paragraph}>{renderLegalParagraph(paragraph)}</p>
                     ))}
                   </section>
                 ))}
@@ -191,7 +203,15 @@ export default function LegalPageClient({ legalPage }: LegalPageClientProps) {
                 <article className="legal-card" key={section.heading}>
                   <h2>{section.heading}</h2>
                   {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
+                    <p key={paragraph}>{renderLegalParagraph(paragraph)}</p>
+                  ))}
+                  {section.subsections?.map((subsection) => (
+                    <section className="legal-subsection" key={subsection.heading}>
+                      <h3>{subsection.heading}</h3>
+                      {subsection.paragraphs.map((paragraph) => (
+                        <p key={paragraph}>{renderLegalParagraph(paragraph)}</p>
+                      ))}
+                    </section>
                   ))}
                 </article>
               ))

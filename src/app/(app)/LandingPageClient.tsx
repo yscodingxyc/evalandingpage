@@ -61,7 +61,7 @@ const services: readonly Service[] = [
   },
   {
     index: "03",
-    title: "Dirrrnndl & Tracht",
+    title: "Dirndl & Tracht",
     galleryItemId: "gallery-dirndl-tracht",
     copy:
       "Maßgeschneiderte Trachtenmode mit beständigen Stoffen, naturverbundenen Farben und präzisen Details.",
@@ -95,7 +95,7 @@ const processSteps: readonly ProcessStep[] = [
     index: "02",
     title: "Stoffe, Farben & Richtpreis",
     paragraphs: [
-      "Gleichzeitig besprechen wir geeignete Stoffe und Ihre Wunschfarben. Nach einer ersten Einschätzung Ihrer Wünsche kann ich Ihnen eine erste Auskunft über den voraussichtlichen Preis geben.",
+      "Gleichzeitig besprechen wir geeignete Stoffe und Ihre Wunschfarben. Nach einer ersten Einschätzung Ihrer Wünsche kann ich Ihnen erstmalig Auskunft über den voraussichtlichen Preis geben.",
       "Da jedes Kleidungsstück ein echtes Unikat ist und sich der zeitliche Aufwand individuell entwickelt, nenne ich zu Beginn einen Richtpreis.",
       "Sollten sich während der Anfertigung grundlegende Designänderungen ergeben, kann sich der Arbeitsaufwand und damit auch der Preis erhöhen. Je klarer Ihre Vorstellungen sind, desto genauer kann ich den Preis am Anfang einschätzen.",
     ],
@@ -119,16 +119,16 @@ const processSteps: readonly ProcessStep[] = [
     index: "05",
     title: "Anproben",
     paragraphs: [
-      "Bei der ersten Anprobe wird die Idee für Sie zum ersten Mal greifbar, und ich nehme die ersten Anpassungen in der Passform vor.",
+      "Bei der ersten Anprobe wird die Idee für Sie zum ersten Mal greifbar, und ich nehme die ersten Anpassungen vor.",
       "Nun ist es an der Zeit, Ihr Wunschstück auf der Haut zu fühlen und in sich zu gehen, um herauszufinden, ob es sich richtig anfühlt.",
-      "Weitere Anproben sorgen dafür, dass das Kleidungsstück sich immer besser anpasst und perfekter wird - bis jedes Detail stimmt.",
+      "Bei Bedarf verhelfen uns weitere Anproben zur richtigen Passform.",
     ],
   },
   {
     index: "06",
     title: "Übergabe",
     paragraphs: [
-      "Erst wenn alles makellos ist und Sie sich in Ihrer vollen Präsenz zeigen können, verlässt Ihr Unikat meine Werkstatt.",
+      "Sobald das Kleidungsstück Ihrer Zufriedenheit entspricht und Sie sich in Ihrer vollen Präsenz zeigen können, verlässt Ihr Unikat meine Werkstatt.",
     ],
   },
 ] as const;
@@ -444,8 +444,8 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
           <div className="container about-grid">
             <div className="about-media">
               <img
-                src="/assets/images/about/eva-portrait.jpg"
-                alt="Eva Maria Handl-Lagler in ihrer Schneiderei"
+                src="/assets/images/about/eva-maria-portrait.png"
+                alt="Eva Maria Handl-Lagler"
                 loading="lazy"
               />
             </div>
@@ -454,15 +454,15 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
               <p className="section-kicker">Über mich</p>
               <h2>Eva Maria Handl-Lagler</h2>
               <p>
-                Ich bin Eva Maria Handl-Lagler, selbstständige Schneidermeisterin für
-                Damenbekleidung. In meiner Werkstatt fertige ich Unikate, die nicht nur gut
-                aussehen, sondern sich auch gut anfühlen und Ihre Individualität sichtbar machen.
+                selbstständige Schneidermeisterin für
+                Damenbekleidung. Seit 2011 fertige ich Unikate, die gut
+                aussehen und sich gut anfühlen sowie Ihre Individualität sichtbar machen.
                 Jedes Kleidungsstück entsteht im persönlichen Austausch und in liebevoller
-                Handarbeit – von der ersten Idee bis zur finalen Übergabe.
+                Handarbeit von der ersten Idee bis zur finalen Übergabe.
               </p>
               <p>
                 Ich kreiere festliche Mode für besondere Momente, maßgeschneiderte Brautkleider
-                für Ihren großen Tag, Dirndl und Trachtenkleider mit natürlichen Materialien und
+                für Ihren großen Tag, Dirndl und Trachtenkleider mit
                 feinen Details sowie hochwertige Alltagskleidung, die Komfort und Stil harmonisch
                 verbindet.
               </p>
@@ -511,8 +511,8 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
               <h2>Leistungen nach Maß</h2>
               <p className="section-intro">
                 Jedes Modell wird auf Ihren Stil, Ihre Wünsche und Ihre Silhouette
-                abgestimmt. So entsteht Kleidung, die nicht nur gut aussieht,
-                sondern sich auch richtig anfühlt.
+                abgestimmt. So entsteht Kleidung, die gut aussieht und sich auch richtig
+                anfühlt.
               </p>
             </div>
 

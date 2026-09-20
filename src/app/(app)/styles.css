@@ -862,6 +862,10 @@ button {
   box-shadow: var(--shadow-strong);
 }
 
+.contact-panel p:not(.section-kicker) {
+  color: #f3eee5;
+}
+
 .contact-links {
   display: grid;
   gap: 0.8rem;
@@ -1020,6 +1024,25 @@ button {
   margin: 0.45rem 0 0;
   color: var(--color-text-soft);
   line-height: 1.9;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.legal-subsection {
+  margin: 1.5rem 0;
+}
+
+.legal-subsection h3 {
+  margin: 0 0 0.6rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-black-soft);
+}
+
+.legal-card p a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
 }
 
 .legal-section-block + .legal-section-block {
