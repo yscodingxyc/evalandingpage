@@ -718,6 +718,7 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
         <div className="container footer-grid">
           <div className="footer-brand">
             <img src="/assets/images/logo.png" alt="Genoveva" />
+            <img className="footer-meister-logo" src="/assets/images/meisterbetrieb.png" alt="Meisterbetrieb" width={80} height={80} loading="lazy" />
           </div>
 
           <div className="footer-address-block">

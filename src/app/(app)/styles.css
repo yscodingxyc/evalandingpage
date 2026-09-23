@@ -1063,8 +1063,22 @@ button {
   align-items: end;
 }
 
+.footer-brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .footer-brand img {
   width: 190px;
+}
+
+.footer-brand .footer-meister-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .footer-title {
