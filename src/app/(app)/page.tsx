@@ -6,7 +6,6 @@ export const revalidate = 60; // ISR - revalidate page content every 60 seconds
 
 export default async function Page() {
   let galleryPreviewItems: GalleryItem[] = [];
-  let heroSlideUrls: string[] = [];
 
   try {
     const payload = await getPayload({ config: configPromise });
@@ -34,24 +33,9 @@ export default async function Page() {
       });
     }
 
-    const heroData = await payload.find({
-      collection: "hero-slides",
-      sort: "order",
-      depth: 1,
-      limit: 10,
-    });
-
-    if (heroData?.docs) {
-      heroSlideUrls = heroData.docs
-        .map((doc: any) => {
-          const imageUrl = doc.image && typeof doc.image === "object" ? doc.image.url : "";
-          return imageUrl || "";
-        })
-        .filter(Boolean);
-    }
   } catch (error) {
     console.error("Failed to fetch data from database:", error);
   }
 
-  return <LandingPageClient initialGalleryItems={galleryPreviewItems} initialHeroSlides={heroSlideUrls} />;
+  return <LandingPageClient initialGalleryItems={galleryPreviewItems} />;
 }

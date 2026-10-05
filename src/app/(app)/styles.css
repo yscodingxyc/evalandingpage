@@ -115,6 +115,7 @@ button {
 }
 
 .header-inner {
+  width: min(1440px, calc(100vw - clamp(2rem, 9vw, 10rem)));
   min-height: var(--header-height);
   display: flex;
   align-items: center;
@@ -139,32 +140,28 @@ button {
 .site-nav-links {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: clamp(1.5rem, 3vw, 3rem);
 }
 
 .site-nav a {
-  padding: 0.85rem 1.2rem;
+  padding: 0.85rem 0;
   color: #f8f1e2;
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 0.76rem;
   font-weight: 700;
-  border: 1px solid rgba(162, 144, 97, 0.38);
-  border-radius: 999px;
-  transition:
-    background-color var(--transition),
-    border-color var(--transition),
-    color var(--transition),
-    transform var(--transition);
+  transition: color var(--transition);
 }
 
 .site-nav a:hover,
 .site-nav a:focus-visible,
 .site-nav a.is-active {
-  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-light) 100%);
-  border-color: transparent;
-  color: var(--color-black);
-  transform: translateY(-1px);
+  color: var(--color-gold-light);
+}
+
+.site-nav a:focus-visible {
+  outline: 1px solid var(--color-gold-light);
+  outline-offset: 6px;
 }
 
 .nav-close {
@@ -234,31 +231,20 @@ button {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  opacity: 0;
-  transform: scale(1.045);
-  will-change: opacity, transform;
-  transition:
-    opacity 1600ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 4800ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.hero-slide.is-active {
-  opacity: 1;
-  transform: scale(1);
 }
 
 .hero-scrim {
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.52) 38%, rgba(0, 0, 0, 0.42) 100%),
-    linear-gradient(180deg, rgba(5, 5, 5, 0.32) 0%, rgba(5, 5, 5, 0.7) 100%);
+    linear-gradient(90deg, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.68) 30%, rgba(0, 0, 0, 0.24) 56%, rgba(0, 0, 0, 0.06) 100%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.08) 0%, rgba(5, 5, 5, 0.18) 100%);
 }
 
 .hero-content {
+  width: min(1440px, calc(100vw - clamp(2rem, 9vw, 10rem)));
   position: relative;
   z-index: 1;
-  padding: clamp(4rem, 9vw, 7rem) 0;
+  padding: clamp(3rem, 6vw, 6rem) 0;
   color: #fff;
-  transform: translateX(clamp(0rem, calc(-6vw + 3.2rem), -2rem));
 }
 
 .hero-kicker,
@@ -271,27 +257,33 @@ button {
   color: var(--color-gold);
 }
 
+.hero-kicker {
+  color: var(--color-gold-light);
+  margin-bottom: 1.5rem;
+}
+
 .hero-script {
+  max-width: 48rem;
   margin: 0;
   font-family: "Allura", cursive;
-  font-size: clamp(2.4rem, 6vw, 4.5rem);
-  line-height: 0.92;
+  font-size: clamp(2.4rem, 3.6vw, 3.6rem);
+  line-height: 1.1;
   color: var(--color-gold-light);
 }
 
 .hero h1 {
-  max-width: 12ch;
-  margin: 1rem 0 1.15rem;
-  font-size: clamp(2.7rem, 6vw, 5.6rem);
-  line-height: 0.92;
-  letter-spacing: -0.045em;
+  max-width: min(28ch, 52vw);
+  margin: 1.75rem 0 1.4rem;
+  font-size: clamp(2rem, 2.85vw, 3rem);
+  line-height: 1.16;
+  letter-spacing: -0.025em;
 }
 
 .hero-copy {
-  max-width: 42rem;
+  max-width: min(38rem, 47vw);
   margin: 0;
   font-size: clamp(1rem, 1.5vw, 1.18rem);
-  line-height: 1.8;
+  line-height: 1.65;
   color: rgba(255, 255, 255, 0.84);
 }
 
@@ -1342,16 +1334,17 @@ button {
   }
 
   .hero-script {
+    max-width: 100%;
     font-size: clamp(2rem, 8.5vw, 3rem);
     line-height: 1;
   }
 
   .hero h1 {
-    max-width: 14ch;
+    max-width: 26ch;
     margin-left: auto;
     margin-right: auto;
-    font-size: clamp(2.1rem, 8.8vw, 3.2rem);
-    line-height: 1.02;
+    font-size: clamp(1.85rem, 6.4vw, 2.6rem);
+    line-height: 1.16;
     letter-spacing: -0.022em;
   }
 
@@ -1395,8 +1388,8 @@ button {
   }
 
   .hero h1 {
-    max-width: 15ch;
-    font-size: clamp(1.9rem, 10.2vw, 2.7rem);
+    max-width: 26ch;
+    font-size: clamp(1.8rem, 6.4vw, 2.4rem);
   }
 
   .hero-copy {

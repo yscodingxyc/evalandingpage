@@ -173,32 +173,21 @@ const galleryItemsFallback: readonly GalleryItem[] = [
   },
 ];
 
-const getHeroSlideStyle = (slide: string): CSSProperties =>
-  ({
-    "--hero-image": `url('${slide}')`,
-  }) as CSSProperties;
+const HERO_IMAGE_STYLE = {
+  "--hero-image": "url('/assets/images/hero/atelier-panorama.jpg')",
+} as CSSProperties;
 
 interface LandingPageClientProps {
   initialGalleryItems: GalleryItem[];
-  initialHeroSlides: string[];
 }
 
-const HERO_SLIDES_FALLBACK = [
-  "/assets/images/hero/hero-1.jpg",
-  "/assets/images/hero/hero-2.jpg",
-  "/assets/images/hero/hero-3.jpg",
-];
-
-export default function LandingPageClient({ initialGalleryItems, initialHeroSlides }: LandingPageClientProps) {
-  const [activeSlide, setActiveSlide] = useState(0);
+export default function LandingPageClient({ initialGalleryItems }: LandingPageClientProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [activeGalleryItem, setActiveGalleryItem] = useState<GalleryItem | null>(null);
   const [activeSection, setActiveSection] = useState<NavItem["id"]>("about");
   const [isScrolled, setIsScrolled] = useState(false);
 
   const galleryItems = initialGalleryItems.length > 0 ? initialGalleryItems : galleryItemsFallback;
-
-  const heroSlides = initialHeroSlides.length > 0 ? initialHeroSlides : HERO_SLIDES_FALLBACK;
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const activeImages = activeGalleryItem
@@ -214,20 +203,6 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
     if (activeImages.length < 2) return;
     setActiveImageIndex((index) => (index + 1) % activeImages.length);
   };
-
-  useEffect(() => {
-    if (heroSlides.length < 2) {
-      return undefined;
-    }
-
-    const timer = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % heroSlides.length);
-    }, 4800);
-
-    return () => {
-      window.clearInterval(timer);
-    };
-  }, [heroSlides]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -408,13 +383,7 @@ export default function LandingPageClient({ initialGalleryItems, initialHeroSlid
       <main>
         <section className="hero" aria-label="Einführung">
           <div className="hero-slider" aria-hidden="true">
-            {heroSlides.map((slide, index) => (
-              <div
-                key={slide}
-                className={index === activeSlide ? "hero-slide is-active" : "hero-slide"}
-                style={getHeroSlideStyle(slide)}
-              />
-            ))}
+            <div className="hero-slide is-active" style={HERO_IMAGE_STYLE} />
           </div>
 
           <div className="hero-scrim"></div>
