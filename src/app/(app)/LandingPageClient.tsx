@@ -448,7 +448,7 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
 
             <div className="process-intro-card">
               <p>
-                Ein maßgeschneidertes Kleidungsstück entsteht in einem kreativen dialog und
+                Ein maßgeschneidertes Kleidungsstück entsteht in einem kreativen Dialog und
                 in feinster Handarbeit. Vom ersten Gespräch bis zur finalen Übergabe begleite
                 ich meine Kundinnen Schritt für Schritt auf dem Weg zu ihrem persönlichen Unikat.
               </p>
@@ -579,7 +579,7 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
                   Damit ich mir ausreichend Zeit für Ihre Beratung und Ihre Wünsche
                   nehmen kann, bitte ich um telefonische Terminvereinbarung. So
                   entsteht Raum für ein persönliches Gespräch, in dem wir uns
-                  kennen lernen und gemeinsam den Grundstein für Ihr neues
+                  kennenlernen und gemeinsam den Grundstein für Ihr neues
                   Lieblingsstück legen.
                 </p>
               </div>
@@ -598,7 +598,7 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
                     alt=""
                     aria-hidden="true"
                   />
-                  WhatsApp schreiben
+                  Schreib mir auf WhatsApp
                 </a>
               </div>
             </div>
