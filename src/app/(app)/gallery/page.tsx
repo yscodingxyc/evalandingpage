@@ -25,9 +25,8 @@ export default async function GalleryPage() {
           copy: doc.copy || "",
           image: imageUrl || "",
           additionalImages: (doc.additionalImages ?? [])
-            .map((media: { url?: string } | string | number | null) =>
-              media && typeof media === "object" ? media.url : undefined)
-            .filter((url: unknown): url is string => typeof url === "string" && url.length > 0),
+            .filter((media: any) => media && typeof media === "object" && media.url)
+            .map((media: any) => ({ url: media.url as string, mimeType: media.mimeType as string })),
         };
       });
     }

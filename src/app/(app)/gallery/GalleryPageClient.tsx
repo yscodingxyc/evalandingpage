@@ -8,7 +8,7 @@ export type GalleryItem = {
   title: string;
   copy: string;
   image: string;
-  additionalImages?: string[];
+  additionalImages?: { url: string; mimeType?: string }[];
   className?: string;
   large?: boolean;
 };
@@ -23,7 +23,7 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const activeImages = activeItem
-    ? [activeItem.image, ...(activeItem.additionalImages ?? [])].filter(Boolean)
+    ? [{ url: activeItem.image, mimeType: "image/jpeg" }, ...(activeItem.additionalImages ?? [])].filter((media) => Boolean(media.url))
     : [];
 
   const handlePrev = () => {
@@ -71,10 +71,10 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
       if (event.key === "Escape") {
         setActiveItem(null);
       }
-      if (event.key === "ArrowLeft") {
+      if (event.key === "ArrowLeft" && !(event.target instanceof HTMLVideoElement)) {
         handlePrev();
       }
-      if (event.key === "ArrowRight") {
+      if (event.key === "ArrowRight" && !(event.target instanceof HTMLVideoElement)) {
         handleNext();
       }
     };
@@ -133,7 +133,7 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
                     <figcaption>
                       <strong>{item.title}</strong>
                       <span>{item.copy}</span>
-                      {Boolean(item.additionalImages?.length) && <span>{1 + (item.additionalImages?.length ?? 0)} Bilder ansehen</span>}
+                      {Boolean(item.additionalImages?.length) && <span>{1 + (item.additionalImages?.length ?? 0)} Bilder / Videos ansehen</span>}
                     </figcaption>
                   </figure>
                 ))}
@@ -162,7 +162,7 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
             <button
               type="button"
               className="gallery-lightbox-close"
-              aria-label="Bildansicht schließen"
+              aria-label="Medienansicht schließen"
               onClick={() => setActiveItem(null)}
             >
               <span></span>
@@ -174,7 +174,7 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
                 <button
                   type="button"
                   className="gallery-lightbox-prev"
-                  aria-label="Vorheriges Bild"
+                  aria-label="Vorheriges Medium"
                   onClick={handlePrev}
                 >
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
@@ -182,7 +182,7 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
                 <button
                   type="button"
                   className="gallery-lightbox-next"
-                  aria-label="Nächstes Bild"
+                  aria-label="Nächstes Medium"
                   onClick={handleNext}
                 >
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
@@ -190,16 +190,26 @@ export default function GalleryPageClient({ galleryItems }: GalleryPageClientPro
               </>
             ) : null}
 
-            <img
-              src={activeImages[activeImageIndex]}
-              alt={activeItem.title}
-              loading="eager"
-            />
+            {activeImages[activeImageIndex]?.mimeType?.startsWith("video/") ? (
+              <video
+                key={activeImages[activeImageIndex].url}
+                src={activeImages[activeImageIndex].url}
+                poster={activeItem.image}
+                controls
+                playsInline
+                preload="none"
+                aria-label={activeItem.title}
+              >
+                Dein Browser unterstützt dieses Video nicht. <a href={activeImages[activeImageIndex].url}>Video herunterladen</a>
+              </video>
+            ) : (
+              <img src={activeImages[activeImageIndex]?.url} alt={activeItem.title} loading="eager" />
+            )}
 
             <div className="gallery-lightbox-caption">
               <strong>{activeItem.title}</strong>
               <span>{activeItem.copy}</span>
-              {activeImages.length > 1 && <span aria-live="polite">Bild {activeImageIndex + 1} von {activeImages.length}</span>}
+              {activeImages.length > 1 && <span aria-live="polite">Medium {activeImageIndex + 1} von {activeImages.length}</span>}
             </div>
           </div>
         </div>

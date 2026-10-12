@@ -61,6 +61,7 @@ const Gallery: CollectionConfig = {
       relationTo: "media",
       required: true,
       label: "Vorschaubild",
+      filterOptions: { mimeType: { contains: "image/" } },
       admin: {
         description: "Vorschaubild und erstes Bild der Galerie.",
       },
@@ -70,10 +71,10 @@ const Gallery: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       hasMany: true,
-      label: "Weitere Bilder (unbegrenzt)",
+      label: "Weitere Bilder und Videos",
       admin: {
         isSortable: true,
-        description: "Beliebig viele Fotos: Über „Upload“ / „Create New“ neue Bilder hochladen oder über „Choose from existing“ vorhandene auswählen. Auch nach dem ersten zusätzlichen Bild kannst du hier weitere hinzufügen. Reihenfolge per Ziehen ändern und anschließend die Galerie speichern.",
+        description: "Bilder und Videos (MP4/WebM) hochladen oder aus der Medienbibliothek auswählen. Reihenfolge per Ziehen ändern und speichern. Videos werden in der vergrößerten Ansicht auf der Startseite und in der Galerie abgespielt.",
       },
     },
     {

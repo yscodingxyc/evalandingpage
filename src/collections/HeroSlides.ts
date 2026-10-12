@@ -41,6 +41,7 @@ const HeroSlides: CollectionConfig = {
       relationTo: "media",
       required: true,
       label: "Bild",
+      filterOptions: { mimeType: { contains: "image/" } },
     },
     {
       name: "alt",

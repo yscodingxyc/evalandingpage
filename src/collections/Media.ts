@@ -4,15 +4,11 @@ import { revalidatePath } from "next/cache";
 const Media: CollectionConfig = {
   slug: "media",
   upload: {
-    adminThumbnail: "thumbnail",
+    mimeTypes: ["image/*", "video/mp4", "video/webm"],
   },
   admin: {
     group: "Inhalte",
-    components: {
-      edit: {
-        Upload: "@/components/admin/CompressibleUpload#CompressibleUpload",
-      },
-    },
+    description: "Bilder und Videos (MP4 oder WebM) hochladen. Für Videos empfiehlt sich MP4 mit H.264. Große Videos werden unverändert gespeichert; für schnelle Wiedergabe vorab für das Web optimieren. Dateien über die integrierte Upload-Steuerung ersetzen.",
   },
   access: {
     read: () => true,
@@ -43,15 +39,6 @@ const Media: CollectionConfig = {
     ],
   },
   fields: [
-    {
-      name: "replaceFile",
-      type: "ui",
-      admin: {
-        components: {
-          Field: "@/components/admin/ReplaceMediaFile#ReplaceMediaFile",
-        },
-      },
-    },
     {
       name: "alt",
       type: "text",
