@@ -57,11 +57,10 @@ export const privacyPage = {
           heading: "Externes Hosting",
           paragraphs: [
             "Diese Website wird bei einem externen Dienstleister gehostet. Anbieter ist:",
-            "Vercel Inc.\n440 N Barranca Avenue #4133\nCovina, CA 91723\nUSA",
+            "World4You Internet Services GmbH\nWolfgang-Pauli-Straße 2, BT3\n4020 Linz\nÖsterreich",
             "Beim Besuch dieser Website werden durch den Hosting-Anbieter insbesondere technische Daten verarbeitet, die für die Bereitstellung und den sicheren Betrieb der Website erforderlich sind. Hierzu können insbesondere IP-Adressen, Zugriffszeiten, aufgerufene Seiten bzw. Dateien, Browser- und Geräteinformationen sowie weitere Server-Logdaten gehören.",
             "Die Verarbeitung erfolgt zum Zweck der sicheren, schnellen und zuverlässigen Bereitstellung dieser Website. Rechtsgrundlage ist unser berechtigtes Interesse gemäß Art. 6 Abs. 1 lit. f DSGVO. Soweit die Verarbeitung zur Erfüllung eines Vertrags oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist, erfolgt sie zusätzlich auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO.",
-            "Vercel verarbeitet personenbezogene Daten teilweise in den USA und gegebenenfalls in weiteren Drittländern. Vercel ist nach eigenen Angaben unter dem EU-U.S. Data Privacy Framework zertifiziert. Darüber hinaus sieht Vercel für bestimmte internationale Datenübermittlungen geeignete Garantien, insbesondere die Standardvertragsklauseln der Europäischen Kommission, vor.",
-            "Weitere Informationen zum Datenschutz bei Vercel finden Sie unter:\nhttps://vercel.com/legal/privacy-notice",
+            "Weitere Informationen zum Datenschutz bei World4You finden Sie unter:\nhttps://www.world4you.com/de/unternehmen/datenschutzerklaerung.html",
           ],
         },
       ],

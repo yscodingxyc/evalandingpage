@@ -116,6 +116,14 @@ const legalPagesData = {
         ],
       },
       {
+        heading: "Hosting",
+        paragraphs: [
+          "World4You Internet Services GmbH",
+          "Wolfgang-Pauli-Straße 2, BT3, 4020 Linz, Österreich",
+          "https://www.world4you.com",
+        ],
+      },
+      {
         heading: "Google Analytics",
         paragraphs: [
           "Diese Website benutzt Google Analytics, einen Webanalysedienst der Google Inc. („Google“). Google Analytics verwendet sog. „Cookies“, Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglichen. Die durch den Cookie erzeugten Informationen über Ihre Benutzung dieser Website werden in der Regel an einen Server von Google in den USA übertragen und dort gespeichert.",
