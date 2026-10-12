@@ -2,6 +2,7 @@
 
 import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
+import GalleryVideo from "@/components/GalleryVideo";
 
 export type GalleryItem = {
   id: string;
@@ -669,17 +670,12 @@ export default function LandingPageClient({ initialGalleryItems }: LandingPageCl
             ) : null}
 
             {activeImages[activeImageIndex]?.mimeType?.startsWith("video/") ? (
-              <video
+              <GalleryVideo
                 key={activeImages[activeImageIndex].url}
                 src={activeImages[activeImageIndex].url}
                 poster={activeGalleryItem.image}
-                controls
-                playsInline
-                preload="none"
-                aria-label={activeGalleryItem.title}
-              >
-                Dein Browser unterstützt dieses Video nicht. <a href={activeImages[activeImageIndex].url}>Video herunterladen</a>
-              </video>
+                title={activeGalleryItem.title}
+              />
             ) : (
               <img src={activeImages[activeImageIndex]?.url} alt={activeGalleryItem.title} loading="eager" />
             )}
